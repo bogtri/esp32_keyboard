@@ -37,7 +37,8 @@ static void IRAM_ATTR gpio_isr_handler(void *arg)
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
-void button_setup(gpio_num_t pin, uint8_t id, QueueHandle_t event_queue, button_handle_t *handle) {
+void button_setup(gpio_num_t pin, uint8_t id, QueueHandle_t event_queue, button_handle_t *handle)
+{
     handle->device_id = id;
     handle->pin = pin;
     handle->event_queue = event_queue;
@@ -47,17 +48,16 @@ void button_setup(gpio_num_t pin, uint8_t id, QueueHandle_t event_queue, button_
         .mode = GPIO_MODE_INPUT,
         .pull_up_en = GPIO_PULLUP_ENABLE,
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .pin_bit_mask = 1ULL << pin
-    };
-    gpio_config(&io_conf);
+        .pin_bit_mask = 1ULL << pin};
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
 
     handle->state = gpio_get_level(pin);
 
     char timer_name[32];
     snprintf(timer_name, sizeof(timer_name), "debounce_timer%u", id);
-    
+
     handle->debounce_timer = xTimerCreate(timer_name, debounce_time, pdFALSE, (void *)handle, debounce_timer_callback);
     assert(handle->debounce_timer);
 
-    gpio_isr_handler_add(pin, gpio_isr_handler, (void *)handle);
+    ESP_ERROR_CHECK(gpio_isr_handler_add(pin, gpio_isr_handler, (void *)handle));
 }

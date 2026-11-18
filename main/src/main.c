@@ -131,10 +131,10 @@ static void ble_task(void *arg)
 
 void app_main(void)
 {
-    gpio_reset_pin(led_pin);
-    gpio_set_direction(led_pin, GPIO_MODE_OUTPUT);
+    ESP_ERROR_CHECK(gpio_reset_pin(led_pin));
+    ESP_ERROR_CHECK(gpio_set_direction(led_pin, GPIO_MODE_OUTPUT));
 
-    gpio_install_isr_service(0);
+    ESP_ERROR_CHECK(gpio_install_isr_service(0));
 
     input_queue = xQueueCreate(10, sizeof(input_event_t));
     assert(input_queue);
