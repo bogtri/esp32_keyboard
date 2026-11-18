@@ -1,13 +1,5 @@
 #pragma once
 
-#include "stdint.h"
-#include "driver/gpio.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/timers.h"
-#include "freertos/queue.h"
-
-#include "input.h"
-
 const static TickType_t debounce_time = pdMS_TO_TICKS(30);
 
 typedef struct

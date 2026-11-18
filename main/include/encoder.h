@@ -1,8 +1,6 @@
 #pragma once
 
-#include "freertos/queue.h"
 #include "driver/pulse_cnt.h"
-#include "driver/gpio.h"
 
 typedef struct
 {

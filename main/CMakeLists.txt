@@ -1,3 +1,4 @@
 idf_component_register(SRC_DIRS "./src"
-                    PRIV_REQUIRES esp_driver_gpio esp_driver_pcnt
+                    REQUIRES esp_hid
+                    PRIV_REQUIRES esp_driver_gpio esp_driver_pcnt nvs_flash
                     INCLUDE_DIRS "./include")

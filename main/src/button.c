@@ -1,6 +1,12 @@
 #include "stdio.h"
+#include "stdint.h"
 #include "esp_log.h"
+#include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/timers.h"
+#include "freertos/queue.h"
 
+#include "input.h"
 #include "button.h"
 
 const static char *TAG = "button.c";

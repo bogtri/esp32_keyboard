@@ -1,4 +1,6 @@
 #include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
+#include "driver/gpio.h"
 
 #include "encoder.h"
 #include "input.h"
