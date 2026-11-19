@@ -1,7 +1,5 @@
 #pragma once
 
-#include "esp_hidd.h"
-
 // HID Consumer Usage IDs (subset of the codes available in the USB HID Usage Tables spec)
 typedef enum
 {
@@ -43,24 +41,6 @@ typedef enum
     HID_CONSUMER_VOLUME_UP = 233,
     HID_CONSUMER_VOLUME_DOWN = 234
 } hid_key_t;
-
-typedef enum
-{
-    BLE_INITIALIZING,
-    BLE_ADVERTISING,
-    BLE_CONNECTED,
-    BLE_DISCONNECTED,
-    BLE_SLEEP
-} ble_status_t;
-
-typedef struct
-{
-    gpio_num_t status_led_pin;
-    esp_hidd_dev_t *hid_dev;
-    uint8_t protocol_mode;
-    uint8_t *buffer;
-    ble_status_t status;
-} ble_handle_t;
 
 typedef struct
 {

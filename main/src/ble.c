@@ -5,6 +5,7 @@
 #include "host/ble_hs.h"
 #include "nimble/nimble_port.h"
 #include "nimble/nimble_port_freertos.h"
+#include "esp_hidd.h"
 
 #include "ble.h"
 #include "esp_hid_gap.h"
@@ -61,6 +62,24 @@
 #define HID_CC_RPT_SET_SELECTION(s, x)   \
     (s)[1] &= HID_CC_RPT_SELECTION_BITS; \
     (s)[1] |= ((x) & 0x03) << 4
+
+typedef enum
+{
+    BLE_INITIALIZING,
+    BLE_ADVERTISING,
+    BLE_CONNECTED,
+    BLE_DISCONNECTED,
+    BLE_SLEEP
+} ble_status_t;
+
+typedef struct
+{
+    gpio_num_t status_led_pin;
+    esp_hidd_dev_t *hid_dev;
+    uint8_t protocol_mode;
+    uint8_t *buffer;
+    ble_status_t status;
+} ble_handle_t;
 
 const static char *TAG = "BLE";
 

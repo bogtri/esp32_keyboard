@@ -5,6 +5,8 @@
 #include "freertos/queue.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "esp_pm.h"
+#include "soc/rtc.h"
 
 #include "ble.h"
 #include "input.h"
@@ -131,6 +133,16 @@ static void ble_task(void *arg)
 
 void app_main(void)
 {
+    // Configure dynamic frequency scaling:
+    // maximum and minimum frequencies are set in sdkconfig,
+    // automatic light sleep is enabled if tickless idle support is enabled.
+    esp_pm_config_t pm_config = {
+            .max_freq_mhz = CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ,
+            .min_freq_mhz = rtc_clk_xtal_freq_get(),
+            .light_sleep_enable = true
+    };
+    ESP_ERROR_CHECK( esp_pm_configure(&pm_config) );
+
     ESP_ERROR_CHECK(gpio_reset_pin(led_pin));
     ESP_ERROR_CHECK(gpio_set_direction(led_pin, GPIO_MODE_OUTPUT));
 

@@ -9,6 +9,8 @@
 #include "input.h"
 #include "button.h"
 
+const static TickType_t debounce_time = pdMS_TO_TICKS(30);
+
 const static char *TAG = "button.c";
 
 static void debounce_timer_callback(TimerHandle_t xTimer)

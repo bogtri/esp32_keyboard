@@ -1,7 +1,5 @@
 #pragma once
 
-const static TickType_t debounce_time = pdMS_TO_TICKS(30);
-
 typedef struct
 {
     gpio_num_t pin;
